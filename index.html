@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #view {
+            width: 100%;
+            height: 100vh;
+            background-color: #f0f2f5;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        nav {
+            width: 100%;
+            height: 10vh;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: -1px -2px 5px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        nav .nav-btn {
+            width: calc(100% / 3);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+            position: relative;
+
+        }
+
+        nav .nav-btn.active {
+            background-color: #e0e0e4;
+        }
+
+        nav .nav-btn i {
+            margin-top: 8px;
+            font-size: 36px;
+        }
+
+        nav .nav-btn:nth-child(2)::before {
+            content: '';
+            width: 1.5px;
+            height: 70%;
+            background-color: rgba(128, 128, 128, 0.2);
+
+            position: absolute;
+            left: -0.75px;
+            top: 15%;
+        }
+
+        nav .nav-btn:nth-child(2)::after {
+            content: '';
+            width: 1.5px;
+            height: 70%;
+            background-color: rgba(128, 128, 128, 0.2);
+
+            position: absolute;
+            right: 0.75px;
+            top: 15%;
+        }
+
+        .content {
+            width: 100%;
+            height: 90vh;
+            position: absolute;
+            top: 0;
+            transition: .3s;
+            padding: 10vh 8% 10vh 8%;
+            background-color: white;
+        }
+
+        .content:nth-child(1) {
+            left: -100%;
+            z-index: 2;
+        }
+
+        .content:nth-child(1).active {
+            left: 0;
+        }
+
+        .content:nth-child(3) {
+            right: -100%;
+            z-index: 2;
+        }
+
+        .content:nth-child(3).active {
+            right: 0;
+        }
+
+        .safe-area{
+            width: 100%;
+            height: 5vh;
+            background-color: rgb(129, 188, 255);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+        }
+
+        .barcode{
+            width: 100%;
+            padding: 30px 20px 3px 20px ;
+            border-radius: 8px;
+            border:2px solid rgba(128, 128, 128, 0.2);
+            margin: auto;
+            position: relative;
+        }
+
+        .barcode::before{
+            content: '載具條碼';
+            padding: 5px 16px;
+            text-align: center;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            left: 8px;
+            transform: translateY(-50%);
+        }
+
+        .barcode img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .content .photo{
+            width: 120px;
+            height: 120px;
+            background-color: rgba(128, 128, 128, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            border-radius: 50%;
+            margin: auto;
+            opacity: .6;
+            margin-bottom: 20px;
+        }
+
+        .content .setting-option{
+            margin-bottom: 10px;
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="view">
+        <div class="content">1</div>
+        <div class="content active">
+            <div class="barcode">
+                <img src="img/barcode.svg" alt="">
+            </div>
+        </div>
+        <div class="content">
+            <div class="photo"><i class="fas fa-user"></i></div>
+            <div class="setting-option">設定選項1</div>
+            <div class="setting-option">設定選項2</div>
+            <div class="setting-option">設定選項3</div>
+            <div class="setting-option">設定選項4</div>
+            <div class="setting-option">設定選項5</div>
+            <div class="setting-option">設定選項6</div>
+        </div>
+        <div class="safe-area"><span>雲端發票</span><span>Prototype</span></div>
+        <nav>
+            <div class="nav-btn"><i class="fas fa-plus"></i><span>增加條碼</span></div>
+            <div class="nav-btn active"><i class="fas fa-barcode"></i><span>條碼顯示</span></div>
+            <div class="nav-btn"><i class="fas fa-user"></i><span>會員設定</span></div>
+        </nav>
+    </div>
+
+
+    <script>
+        var nav_btns = document.querySelectorAll(".nav-btn")
+        var contents = document.querySelectorAll(".content")
+
+
+        nav_btns.forEach((btn, index) => {
+            btn.onclick = function () {
+                clearActive()
+                btn.classList.add("active")
+
+                contents[index].classList.add("active")
+            }
+        });
+
+        function clearActive() {
+            nav_btns.forEach(btn => {
+                btn.classList.remove("active")
+            });
+            contents.forEach(content => {
+                content.classList.remove("active")
+            });
+        }
+
+    </script>
+</body>
+
+</html>
