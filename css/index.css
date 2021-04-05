@@ -246,7 +246,9 @@ nav .nav-btn:nth-child(2)::after {
     height: 100vh;
     text-align: center;
     background-color: rgb(192, 192, 192);
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1000;
 }
 
